@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=KILL Fldigi+Flmsg (last resort)
+GenericName=Amateur Radio Digital Modem
+Comment=Amateur Radio Sound Card Communications
+Exec=bash -c '/usr/local/bin/kill_fl.sh'
+Icon=fldigi
+Terminal=false
+Type=Application
+Categories=HamRadio;
+Path=_HOME_

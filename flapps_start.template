@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=START Fldigi+Flmsg
+GenericName=Amateur Radio Digital Modem
+Comment=Amateur Radio Sound Card Communications
+Exec=bash -c '/usr/local/bin/start_fl.sh _SIDE_ _FLDIGI_FREQ_'
+Icon=fldigi
+Terminal=false
+Type=Application
+Categories=HamRadio;
+Path=_HOME_
