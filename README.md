@@ -1,5 +1,7 @@
 # Installation Instructions for Making a Nexus DR-X Raspberry Pi Image Suitable for WECG Remote Access
 
+VERSION 20200816
+
 ## Prerequisites
 
 - A Raspberry Pi 3, 3B or 4B running the Nexus DR-X image and connected to the Internet
@@ -41,7 +43,7 @@ __If you've already run the `install_wecg.sh` script on the Pi, skip to step 3._
 	- You can [change the frequency in FLdigi in a number of ways](http://www.w1hkj.com/FldigiHelp/rig_control_page.html). The easiest is to click on the leftmost digit in the frequency display, then type your desired frequency in KHz, then press __RETURN__.
 	
 		__IMPORTANT!__  The `710.sh` script will not work while Fldigi is running with rigCAT enabled because rigCAT has control of the serial port to the radio. Once Fldigi is stopped, you can again use `710.sh`.
-1. Test the __START Fldigi+Flmsg__ and __START Fldigi+Flmsg__ and __KILL Fldigi+Flmsg__
+1. Test the __START Fldigi+Flmsg__ and __STOP Fldigi+Flmsg__ and __KILL Fldigi+Flmsg__
 menu items to make sure they work as desired.
 	
 ### Install `dwagent`  
