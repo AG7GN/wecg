@@ -17,7 +17,7 @@ __If you've already run the `install_wecg.sh` script on the Pi, skip to step 3._
 1. Open a Terminal and run this command:
 
 		install_wecg.sh
-	When that completes, a browser will open and bring you to this page.
+	Run it without arguments for instructions, then run it again with the appropriate arguments. When that completes, a browser will open and bring you to this page.
 1. Open the Main Menu editor: __Raspberry > Preferences > Main Menu editor__ and arrange the items in the Hamradio menu as desired.  WARNING: Do not click __Cancel__ even if you make no changes! Click __OK__ instead. Clicking __Cancel__ will restore the menu to default settings.
 1. Configure rigCAT in FLdigi
 	- Start FLdigi: __Raspberry > Hamradio > START FLdigi+FLmsg__.
