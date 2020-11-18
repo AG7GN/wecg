@@ -22,21 +22,23 @@ __If you've already run the `install_wecg.sh` script on the Pi, skip to step 3._
 	Run it without arguments for instructions, then run it again with the appropriate arguments. When that completes, a browser will open and bring you to this page.
 1. Open the Main Menu editor: __Raspberry > Preferences > Main Menu editor__ and arrange the items in the Hamradio menu as desired.  WARNING: Do not click __Cancel__ even if you make no changes! Click __OK__ instead. Clicking __Cancel__ will restore the menu to default settings.
 
-Before continuing on the the __Configure rigCAT in FLdigi__ step, please read the following warnings:
+Before continuing proceeding to the __Configure rigCAT in FLdigi__ step, please read the following warnings:
 
 __IMPORTANT!__  The `710.sh` script will not work while Fldigi is running with rigCAT enabled because rigCAT has control of the serial port to the radio. Once Fldigi is stopped, you can again use `710.sh`.  
 		
-__IMPORTANT!__  The `710.py` GUI will not work while Fldigi is running with rigCAT enbled because rigCAT has control of the serial port to the radio. Once Fldigi is stopped, you can again use `710.py`.
+__IMPORTANT!__  The `710.py` GUI will not work while Fldigi is running with rigCAT enabled because rigCAT has control of the serial port to the radio. Once Fldigi is stopped, you can again use `710.py`.
 
-**Now that you've read those warnings, you can decide whether or not to enable rigCAT in FLdigi. In other words, you have the choice of using rig control via rigCAT in FLdigi to control the radio's frequency or you can use `710.sh` or `710.py` to control the radio, but you cannot use either of these if rigCAT is enabled in FLdigi and FLdigi is running.**
+***Now that you've read those warnings, you can decide whether or not to enable rigCAT in FLdigi. In other words, you have the choice of using rig control via rigCAT in FLdigi to control the radio's frequency or you can use `710.sh` or `710.py` to control the radio, but you cannot use either of these if rigCAT is enabled in FLdigi and FLdigi is running.***
+
+__NOTE:__ If FLdigi is configured to use RigCAT and you run the Start script while 710.py is running, RigCAT will be temporarily disabled in FLDigi. When you stop FLdigi/FLmsg with the Stop script, RigCAT will be re-enabled in the FLdigi configuration.
  
 1. Configure rigCAT in FLdigi (Optional)
 	- Start FLdigi: __Raspberry > Hamradio > START FLdigi+FLmsg__.
 	- Select __View > Rig/Log Controls > Full__.
-	- Click __Configure > Config dialog > CAT (rigcat)__.
+	- Click __Configure > Config dialog > Rig Control > CAT (rigcat)__.
 	- Click __Open__ and go to `.fldigi/rigs` and select the `TM-D710G.xml` file. Click __Open__.
 	- In the __Device__ dropdown, select the serial port that starts with `/dev/serial/by-id/...`.
-	- Select Baud rate `57600` and make sure the radio is set the same. It should be if you use the `710.sh` script.
+	- Select Baud rate `57600` and make sure the radio is set the same. It should be if you use the `710.sh` or `710.py` scripts.
 	- Uncheck __CAT command for PTT__.
 	- Check __RTS/CTS flow control__ and __Restore UART Settings on Close__.
 	- Check the __Use rigCAT__ box.
