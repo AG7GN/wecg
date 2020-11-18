@@ -30,7 +30,7 @@
 #%                     	
 #================================================================
 #- IMPLEMENTATION
-#-    version         ${SCRIPT_NAME} 1.0.1
+#-    version         ${SCRIPT_NAME} 1.0.2
 #-    author          Steve Magnuson, AG7GN
 #-    license         CC-BY-SA Creative Commons License
 #-    script_id       0
@@ -102,12 +102,17 @@ function restoreApp () {
 	RE="^[0-9]+([.][0-9]+)?$"
 	if [[ $2 =~ $RE ]]
 	then # Supplied frequency is a number
-		if $(command -v 710.sh) >/dev/null 2>&1
-		then # 710.sh script is installed, so change to the desired frequency
-		   echo -e "\nQSY to $2, standby...\n" >$PIPEDATA
-			$(command -v 710.sh) set b freq $2 >$PIPEDATA 
-			echo >$PIPEDATA
+		if ! pgrep -f 710.py >/dev/null 2>&1
+		then
+			if $(command -v 710.sh) >/dev/null 2>&1
+			then # 710.sh script is installed, so change to the desired frequency
+			   echo -e "\nQSY to $2, standby...\n" >$PIPEDATA
+				$(command -v 710.sh) set b freq $2 >$PIPEDATA 
+			fi
+		else
+			echo -e "\n710.py already running. Frequency will not be changed.\n" >$PIPEDATA
 		fi
+		echo >$PIPEDATA
 	fi
 	
 	case ${1,,} in

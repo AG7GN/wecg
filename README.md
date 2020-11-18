@@ -1,10 +1,10 @@
 # Installation Instructions for Making a Nexus DR-X Raspberry Pi Image Suitable for WECG Remote Access
 
-VERSION 20200816
+VERSION 20201118
 
 ## Prerequisites
 
-- A Raspberry Pi 3, 3B or 4B running the Nexus DR-X image and connected to the Internet
+- A Raspberry Pi 3B, 3B+ or 4B running the Nexus DR-X image and connected to the Internet
 - A Kenwood TM-D710G or TM-V71A radio attached via serial cable to the Pi
 - The RMSGW or APRS (`dw_aprs_gui.sh`) apps are configured and operating normally.
 - You are a WECG administrator setting up the Pi for remote access by other WECG members
@@ -15,13 +15,22 @@ VERSION 20200816
 
 __If you've already run the `install_wecg.sh` script on the Pi, skip to step 3.__
 
-1. Use the Updater in the __Hamradio__ menu to update to the latest `hampi-utilites`.
+1. Use the Updater in the __Hamradio__ menu to update to the latest `nexus-utilites`.
 1. Open a Terminal and run this command:
 
 		install_wecg.sh
 	Run it without arguments for instructions, then run it again with the appropriate arguments. When that completes, a browser will open and bring you to this page.
 1. Open the Main Menu editor: __Raspberry > Preferences > Main Menu editor__ and arrange the items in the Hamradio menu as desired.  WARNING: Do not click __Cancel__ even if you make no changes! Click __OK__ instead. Clicking __Cancel__ will restore the menu to default settings.
-1. Configure rigCAT in FLdigi
+
+Before continuing on the the __Configure rigCAT in FLdigi__ step, please read the following warnings:
+
+__IMPORTANT!__  The `710.sh` script will not work while Fldigi is running with rigCAT enabled because rigCAT has control of the serial port to the radio. Once Fldigi is stopped, you can again use `710.sh`.  
+		
+__IMPORTANT!__  The `710.py` GUI will not work while Fldigi is running with rigCAT enbled because rigCAT has control of the serial port to the radio. Once Fldigi is stopped, you can again use `710.py`.
+
+**Now that you've read those warnings, you can decide whether or not to enable rigCAT in FLdigi. In other words, you have the choice of using rig control via rigCAT in FLdigi to control the radio's frequency or you can use `710.sh` or `710.py` to control the radio, but you cannot use either of these if rigCAT is enabled in FLdigi and FLdigi is running.**
+ 
+1. Configure rigCAT in FLdigi (Optional)
 	- Start FLdigi: __Raspberry > Hamradio > START FLdigi+FLmsg__.
 	- Select __View > Rig/Log Controls > Full__.
 	- Click __Configure > Config dialog > CAT (rigcat)__.
@@ -42,7 +51,6 @@ __If you've already run the `install_wecg.sh` script on the Pi, skip to step 3._
 	- Click __Save__, then __Close__ to close the configuration screen.
 	- You can [change the frequency in FLdigi in a number of ways](http://www.w1hkj.com/FldigiHelp/rig_control_page.html). The easiest is to click on the leftmost digit in the frequency display, then type your desired frequency in KHz, then press __RETURN__.
 	
-		__IMPORTANT!__  The `710.sh` script will not work while Fldigi is running with rigCAT enabled because rigCAT has control of the serial port to the radio. Once Fldigi is stopped, you can again use `710.sh`.
 1. Test the __START Fldigi+Flmsg__ and __STOP Fldigi+Flmsg__ and __KILL Fldigi+Flmsg__
 menu items to make sure they work as desired.
 	
