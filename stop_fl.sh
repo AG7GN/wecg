@@ -114,7 +114,7 @@ function restoreApp () {
 			# Re-enable RigCAT if it was running when the start script ran.
 			if [[ -s $HOME/.fldigi$SIDE/fldigi_def.rigcat ]]  # RigCAT was previously enabled
 			then  # Re-enable it
-				echo -e "\nRe-enabling RigCAT in FLdigi\n" >&8
+				echo -e "\nRe-enabling RigCAT in FLdigi\n" >$PIPEDATA
 				sed -i -e \
 				  's/<CHKUSERIGCATIS>0<\/CHKUSERIGCATIS>/<CHKUSERIGCATIS>1<\/CHKUSERIGCATIS>/' $HOME/.fldigi$SIDE/fldigi_def.xml
 				rm -f $HOME/.fldigi$SIDE/fldigi_def.rigcat
