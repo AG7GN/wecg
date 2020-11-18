@@ -113,6 +113,7 @@ function restoreApp () {
 			echo -e "\n710.py already running.\nFrequency will not be changed.\n" >$PIPEDATA
 			# Re-enable RigCAT if it was running when the start script ran.
 			if [[ -s $HOME/.fldigi$SIDE/fldigi_def.rigcat ]]  # RigCAT was previously enabled
+			then  # Re-enable it
 				echo -e "\nRe-enabling RigCAT in FLdigi\n" >&8
 				sed -i -e \
 				  's/<CHKUSERIGCATIS>0<\/CHKUSERIGCATIS>/<CHKUSERIGCATIS>1<\/CHKUSERIGCATIS>/' $HOME/.fldigi$SIDE/fldigi_def.xml
