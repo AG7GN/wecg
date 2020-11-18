@@ -250,8 +250,18 @@ then
 		   		echo -e "\nQSY to $2, standby...\n" >&8
 					$(command -v 710.sh) set b freq $2 >&8
 				fi
-			else
+			else  # 710.py is running. Disable RigCAT in FLdigi
 				echo -e "\n710.py already running.\nFrequency will not be changed\n" >&8
+				# Disable RigCAT if necessary, because 710.py is running.
+				RIGCAT="$(grep -o -P '(?<=<CHKUSERIGCATIS>).*(?=<\/CHKUSERIGCATIS>)' \
+				$HOME/.fldigi$SIDE/fldigi_def.xml)"
+				if [[ $RIGCAT == "1" ]]
+				then
+					echo -e "\nRigCAT enabled in FLdigi. Disabling it.\n" >&8
+					sed -i -e \
+				's/<CHKUSERIGCATIS>1<\/CHKUSERIGCATIS>/<CHKUSERIGCATIS>0<\/CHKUSERIGCATIS>/' $HOME/.fldigi$SIDE/fldigi_def.xml
+					echo "RIGCAT=$RIGCAT" > $HOME/.fldigi$SIDE/fldigi_def.rigcat
+				fi
 			fi
 			echo >&8
 		fi

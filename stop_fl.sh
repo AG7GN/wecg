@@ -103,14 +103,21 @@ function restoreApp () {
 	if [[ $2 =~ $RE ]]
 	then # Supplied frequency is a number
 		if ! pgrep -f 710.py >/dev/null 2>&1
-		then
+		then  # 710.py not running. Use 710.sh to change frequency
 			if $(command -v 710.sh) >/dev/null 2>&1
 			then # 710.sh script is installed, so change to the desired frequency
 			   echo -e "\nQSY to $2, standby...\n" >$PIPEDATA
 				$(command -v 710.sh) set b freq $2 >$PIPEDATA 
 			fi
-		else
+		else  # 710.py running. Disable RigCAT in fldigi and continue using 710.py instead
 			echo -e "\n710.py already running.\nFrequency will not be changed.\n" >$PIPEDATA
+			# Re-enable RigCAT if it was running when the start script ran.
+			if [[ -s $HOME/.fldigi$SIDE/fldigi_def.rigcat ]]  # RigCAT was previously enabled
+				echo -e "\nRe-enabling RigCAT in FLdigi\n" >&8
+				sed -i -e \
+				  's/<CHKUSERIGCATIS>0<\/CHKUSERIGCATIS>/<CHKUSERIGCATIS>1<\/CHKUSERIGCATIS>/' $HOME/.fldigi$SIDE/fldigi_def.xml
+				rm -f $HOME/.fldigi$SIDE/fldigi_def.rigcat
+			fi
 		fi
 		echo >$PIPEDATA
 	fi
