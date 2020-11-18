@@ -50,7 +50,8 @@ __IMPORTANT!__  The `710.py` GUI will not work while Fldigi is running with rigC
 	- Click __Initialize__. The radio's frequency should appear in the upper left corner of FLdigi.
 	- Click __Save__, then __Close__ to close the configuration screen.
 	- You can [change the frequency in FLdigi in a number of ways](http://www.w1hkj.com/FldigiHelp/rig_control_page.html). The easiest is to click on the leftmost digit in the frequency display, then type your desired frequency in KHz, then press __RETURN__.
-	
+
+	If you decide to switch off RigCAT at a later time (for example, if you want to use either of the 710 scripts instead), simply uncheck the __Use RigCAT__ box in Fldigi configuration window (__Rig Control__ > __CAT (rigcat)__)
 1. Test the __START Fldigi+Flmsg__ and __STOP Fldigi+Flmsg__ and __KILL Fldigi+Flmsg__
 menu items to make sure they work as desired.
 	
