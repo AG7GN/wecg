@@ -3,7 +3,7 @@
 # HEADER
 #================================================================
 #% SYNOPSIS
-#+   ${SCRIPT_NAME} [-hv] [rmsgw|aprs [frequency]]
+#+   ${SCRIPT_NAME} [-hv] [rmsgw|aprs [left|right [frequency]]]
 #%
 #% DESCRIPTION
 #%   This script stops the FL apps (Fldigi, Flrig, Flmsg) on WECG
@@ -246,7 +246,18 @@ done
 shift $((${OPTIND} - 1)) ## shift options
 
 [ -z "$1" ] && APP="" || APP="$1"
-[ -z "$2" ] && FREQ="" || FREQ="$2"
+case ${2,,} in
+	left)
+		SIDE="-left"
+		;;
+	right)
+		SIDE="-right"
+		;;
+	*)
+		SIDE=""
+		;;
+esac
+[ -z "$3" ] && FREQ="" || FREQ="$3"
 export -f restoreApp
 export restoreApp_cmd="bash -c 'restoreApp $APP $FREQ'"
 export PIPEDATA=$PIPE
@@ -267,6 +278,7 @@ $SYNTAX && set -n
 $DEBUG && set -x 
 
 YAD_PIDs=()
+
 
 yad --on-top --back=black --fore=yellow --selectable-labels --width=400 --height=550 \
 	--text-info --text-align=center --title="$TITLE" \

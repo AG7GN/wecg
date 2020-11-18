@@ -2,7 +2,7 @@
 Name=STOP Fldigi+Flmsg
 GenericName=Amateur Radio Digital Modem
 Comment=Amateur Radio Sound Card Communications
-Exec=bash -c '/usr/local/bin/stop_fl.sh _RESTORE_APP_ _RESTORE_FREQ_'
+Exec=bash -c '/usr/local/bin/stop_fl.sh _RESTORE_APP_ _SIDE_ _RESTORE_FREQ_'
 Icon=fldigi
 Terminal=false
 Type=Application
