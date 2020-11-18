@@ -17,7 +17,7 @@
 #%
 #================================================================
 #- IMPLEMENTATION
-#-    version         ${SCRIPT_NAME} 1.0.2
+#-    version         ${SCRIPT_NAME} 1.0.3
 #-    author          Steve Magnuson, AG7GN
 #-    license         CC-BY-SA Creative Commons License
 #-    script_id       0
@@ -251,7 +251,7 @@ then
 					$(command -v 710.sh) set b freq $2 >&8
 				fi
 			else
-				echo -e "\n710.py already running. Frequency will not be changed\n" >&8
+				echo -e "\n710.py already running.\nFrequency will not be changed\n" >&8
 			fi
 			echo >&8
 		fi

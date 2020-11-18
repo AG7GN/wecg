@@ -30,7 +30,7 @@
 #%                     	
 #================================================================
 #- IMPLEMENTATION
-#-    version         ${SCRIPT_NAME} 1.0.2
+#-    version         ${SCRIPT_NAME} 1.0.3
 #-    author          Steve Magnuson, AG7GN
 #-    license         CC-BY-SA Creative Commons License
 #-    script_id       0
@@ -110,7 +110,7 @@ function restoreApp () {
 				$(command -v 710.sh) set b freq $2 >$PIPEDATA 
 			fi
 		else
-			echo -e "\n710.py already running. Frequency will not be changed.\n" >$PIPEDATA
+			echo -e "\n710.py already running.\nFrequency will not be changed.\n" >$PIPEDATA
 		fi
 		echo >$PIPEDATA
 	fi
