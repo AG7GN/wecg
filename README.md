@@ -1,6 +1,6 @@
 # Installation Instructions for Making a Nexus DR-X Raspberry Pi Image Suitable for WECG Remote Access
 
-VERSION 20201118
+VERSION 20201230
 
 ## Prerequisites
 
@@ -133,5 +133,12 @@ By default, the dwagent runs as root, so that when you start a shell in the DWSe
 		
 	From now on, the `dwagent.service` will start as user `pi` at bootup.
 
-	
+### (Optional) Remove `avahi-daemon` and `libnss-mdns` services 
+
+1. If this Pi is being deployed on a network used by others (like WWU, BTECH), remove the `avahi-daemon` and `libnss-mdns` services so the Pi doesn't advertise itself on those networks:
+
+		sudo apt -y remove pulseaudio-module-zeroconf avahi-daemon libnss-mdns
+		sudo apt -y autoremove
+		systemctl --user restart pulseaudio
+
 	
