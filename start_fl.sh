@@ -102,6 +102,9 @@ SCRIPT_FULLPATH="${SCRIPT_DIR}/${SCRIPT_NAME}"
 SCRIPT_ID="$(ScriptInfo | grep script_id | tr -s ' ' | cut -d' ' -f3)"
 SCRIPT_HEADSIZE=$(grep -sn "^# END_OF_HEADER" ${0} | head -1 | cut -f1 -d:)
 VERSION="$(ScriptInfo version | grep version | tr -s ' ' | cut -d' ' -f 4)" 
+RIG_MODEL=1022 # Yaesu FT-857
+RIG_SPEED=38400
+RIG_PORT=/dev/yaesu
 
 TITLE="Start Fldigi and Flmsg $VERSION"
 
@@ -114,7 +117,7 @@ exec 8<> $PIPE
 #============================
   
 #== set short options ==#
-SCRIPT_OPTS=':hv-:'
+SCRIPT_OPTS=':r:hv-:'
 
 #== set long options associated with short one ==#
 typeset -A ARRAY_OPTS
@@ -168,6 +171,9 @@ do
 			ScriptInfo version
 			exit 0
 			;;
+		r) 
+			RIG=${OPTARG^^:-KENWOOD}
+			;;
 		:) 
 			Die "${SCRIPT_NAME}: -$OPTARG: option requires an argument"
 			;;
@@ -208,7 +214,7 @@ case ${1,,} in
 esac
 
 
-if ! pgrep fldigi >/dev/null
+if ! pgrep fldigi >/dev/null && ! pgrep flrig >/dev/null
 then
 	yad --on-top --back=black --fore=yellow --selectable-labels --width=400 --height=550 \
 		--text-info --text-align=center --title="$TITLE" \
@@ -243,27 +249,44 @@ then
 		RE="^[0-9]+([.][0-9]+)?$"
 		if [[ $2 =~ $RE ]]
 		then # Supplied frequency is a number
-			if ! pgrep -f 710.py >/dev/null 2>&1
-			then
-				if $(command -v 710.sh) >/dev/null 2>&1
-				then # 710.sh script is installed, so change to the desired frequency
-		   		echo -e "\nQSY to $2, standby...\n" >&8
-					$(command -v 710.sh) set b freq $2 >&8
-				fi
-			else  # 710.py is running. Disable RigCAT in FLdigi
-				echo -e "\n710.py already running.\nFrequency will not be changed\n" >&8
-				# Disable RigCAT if necessary, because 710.py is running.
-				RIGCAT="$(grep -o -P '(?<=<CHKUSERIGCATIS>).*(?=<\/CHKUSERIGCATIS>)' \
-				$HOME/.fldigi$SIDE/fldigi_def.xml)"
-				if [[ $RIGCAT == "1" ]]
-				then
-					echo -e "\nRigCAT enabled in FLdigi. Disabling it.\n" >&8
-					sed -i -e \
-				's/<CHKUSERIGCATIS>1<\/CHKUSERIGCATIS>/<CHKUSERIGCATIS>0<\/CHKUSERIGCATIS>/' $HOME/.fldigi$SIDE/fldigi_def.xml
-					echo "RIGCAT=$RIGCAT" > $HOME/.fldigi$SIDE/fldigi_def.rigcat
-				fi
-			fi
-			echo >&8
+			case $RIG in
+				KENWOOD)
+					if ! pgrep -f 710.py >/dev/null 2>&1
+					then
+						if $(command -v 710.sh) >/dev/null 2>&1
+						then # 710.sh script is installed, so change to the desired frequency
+							echo -e "\nQSY to $2, standby...\n" >&8
+							$(command -v 710.sh) set b freq $2 >&8
+						fi
+					else  # 710.py is running. Disable RigCAT in FLdigi
+						echo -e "\n710.py already running.\nFrequency will not be changed\n" >&8
+						# Disable RigCAT if necessary, because 710.py is running.
+						RIGCAT="$(grep -o -P '(?<=<CHKUSERIGCATIS>).*(?=<\/CHKUSERIGCATIS>)' \
+						$HOME/.fldigi$SIDE/fldigi_def.xml)"
+						if [[ $RIGCAT == "1" ]]
+						then
+							echo -e "\nRigCAT enabled in FLdigi. Disabling it.\n" >&8
+							sed -i -e \
+						's/<CHKUSERIGCATIS>1<\/CHKUSERIGCATIS>/<CHKUSERIGCATIS>0<\/CHKUSERIGCATIS>/' $HOME/.fldigi$SIDE/fldigi_def.xml
+							echo "RIGCAT=$RIGCAT" > $HOME/.fldigi$SIDE/fldigi_def.rigcat
+						fi
+					fi
+					echo >&8
+					;;
+				YAESU)
+					if $(command -v yaesu_power.sh) &>/dev/null
+					then
+						echo -e "\nPowering on $RIG, standby...\n" >&8
+						yaesu_power.sh on >&8
+						echo -e "\nQSY to $2, standby...\n" >&8
+						rigctl -m $RIG_MODEL -s $RIG_SPEED -r $RIG_PORT F $(printf "%d" $(bc <<< $2*1000000)) >&8
+					fi
+					echo >&8
+					;;
+				*)
+					echo -e "Unknown rig" >&8
+					;;
+			esac
 		fi
 	fi
 	gtk-launch fldigi$SIDE.desktop >/dev/null 2>&1 &

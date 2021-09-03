@@ -102,25 +102,37 @@ function restoreApp () {
 	RE="^[0-9]+([.][0-9]+)?$"
 	if [[ $2 =~ $RE ]]
 	then # Supplied frequency is a number
-		if ! pgrep -f 710.py >/dev/null 2>&1
-		then  # 710.py not running. Use 710.sh to change frequency
-			if $(command -v 710.sh) >/dev/null 2>&1
-			then # 710.sh script is installed, so change to the desired frequency
-			   echo -e "\nQSY to $2, standby...\n" >$PIPEDATA
-				$(command -v 710.sh) set b freq $2 >$PIPEDATA 
-			fi
-		else  # 710.py running. Disable RigCAT in fldigi and continue using 710.py instead
-			echo -e "\n710.py already running.\nFrequency will not be changed.\n" >$PIPEDATA
-		fi
-		# Re-enable RigCAT if it was running when the start script ran.
-		if [[ -s $HOME/.fldigi$SIDE/fldigi_def.rigcat ]]  # RigCAT was previously enabled
-		then  # Re-enable it
-			echo -e "\nRe-enabling RigCAT in FLdigi\n" >$PIPEDATA
-			sed -i -e \
-			  's/<CHKUSERIGCATIS>0<\/CHKUSERIGCATIS>/<CHKUSERIGCATIS>1<\/CHKUSERIGCATIS>/' $HOME/.fldigi$SIDE/fldigi_def.xml
-			rm -f $HOME/.fldigi$SIDE/fldigi_def.rigcat
-		fi
-		echo >$PIPEDATA
+		case $RIG in
+			KENDWOOD)
+				if ! pgrep -f 710.py >/dev/null 2>&1
+				then  # 710.py not running. Use 710.sh to change frequency
+					if $(command -v 710.sh) >/dev/null 2>&1
+					then # 710.sh script is installed, so change to the desired frequency
+						echo -e "\nQSY to $2, standby...\n" >$PIPEDATA
+						$(command -v 710.sh) set b freq $2 >$PIPEDATA 
+					fi
+				else  # 710.py running. Disable RigCAT in fldigi and continue using 710.py instead
+					echo -e "\n710.py already running.\nFrequency will not be changed.\n" >$PIPEDATA
+				fi
+				# Re-enable RigCAT if it was running when the start script ran.
+				if [[ -s $HOME/.fldigi$SIDE/fldigi_def.rigcat ]]  # RigCAT was previously enabled
+				then  # Re-enable it
+					echo -e "\nRe-enabling RigCAT in FLdigi\n" >$PIPEDATA
+					sed -i -e \
+					  's/<CHKUSERIGCATIS>0<\/CHKUSERIGCATIS>/<CHKUSERIGCATIS>1<\/CHKUSERIGCATIS>/' $HOME/.fldigi$SIDE/fldigi_def.xml
+					rm -f $HOME/.fldigi$SIDE/fldigi_def.rigcat
+				fi
+				echo >$PIPEDATA
+			YAESU)
+				killall flrig >$PIPEDATA
+				echo -e "\nQSY to $2, standby...\n" >$PIPEDATA
+				rigctl -m $RIG_MODEL -s $RIG_SPEED -r $RIG_PORT F $(printf "%d" $(bc <<< $2*1000000)) >$PIPEDATA
+				echo >&8
+				;;
+			*)
+				echo -e "Unknown rig" >$PIPEDATA
+				;;
+		esac
 	fi
 	
 	case ${1,,} in
@@ -181,7 +193,7 @@ exec 8<> $PIPE
 #============================
   
 #== set short options ==#
-SCRIPT_OPTS=':hv-:'
+SCRIPT_OPTS=':r:hv-:'
 
 #== set long options associated with short one ==#
 typeset -A ARRAY_OPTS
@@ -234,6 +246,9 @@ do
 		v) 
 			ScriptInfo version
 			exit 0
+			;;
+		r) 
+			RIG=${OPTARG^^:-KENWOOD}
 			;;
 		:) 
 			Die "${SCRIPT_NAME}: -$OPTARG: option requires an argument"
