@@ -250,6 +250,7 @@ then
 		RE="^[0-9]+([.][0-9]+)?$"
 		if [[ $2 =~ $RE ]]
 		then # Supplied frequency is a number
+			echo -e "\nFrequency change to $2 requested.\n" >&8
 			case $RIG in
 				KENWOOD)
 					if ! pgrep -f 710.py >/dev/null 2>&1
