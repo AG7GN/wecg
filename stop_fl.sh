@@ -320,8 +320,8 @@ pkill -SIGTERM flrig
 [ -z $APP ] || restoreApp $APP $FREQ
 if [[ $RIG == "YAESU" ]]
 then 
-	echo -e "\nPowering off $RIG, standby...\n" >$PIPEDATA
-	yaesu_power.sh off >$PIPEDATA
+	echo -e "\nPowering off $RIG, standby...\n" >&8
+	yaesu_power.sh off >&8
 fi
 
 echo "This window will close in 5 seconds." >&8
