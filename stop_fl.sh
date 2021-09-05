@@ -128,6 +128,8 @@ function restoreApp () {
 				killall flrig >$PIPEDATA
 				echo -e "\nQSY to $2, standby...\n" >$PIPEDATA
 				rigctl -m $RIG_MODEL -s $RIG_SPEED -r $RIG_PORT F $(printf "%d" $(bc <<< $2*1000000)) >$PIPEDATA
+				echo -e "\nPowering off $RIG, standby...\n" >&8
+				yaesu_power.sh off >&8
 				echo >&8
 				;;
 			*)
