@@ -318,12 +318,15 @@ pkill -SIGTERM flrig
 #	--text-info --text-align=center --title="$TITLE" --tail --center \
 #	--buttons-layout=center --button="<b>Exit</b>":1 --button="<b>Restart ${1^^} &#x26; #Exit</b>":"$restoreApp_cmd" <&8
 
-[ -z $APP ] || restoreApp $APP $FREQ
-echo "RIG=$RIG"
-if [[ $RIG == "YAESU" ]]
-then 
-	echo -e "\nPowering off $RIG, standby...\n" >&8
-	yaesu_power.sh off >&8
+if [[ -z $APP ]]
+then
+	if [[ $RIG == "YAESU" ]]
+	then 
+		echo -e "\nPowering off $RIG, standby...\n" >&8
+		yaesu_power.sh off >&8
+	fi
+else
+	restoreApp $APP $FREQ
 fi
 
 echo "This window will close in 5 seconds." >&8
