@@ -314,6 +314,7 @@ then
 	sleep 4
 	# ...kill the browser
 	pkill -f "chromium.*$(basename -- $START_FILE .213)"
+	pkill -f "firefox.*$(basename -- $START_FILE .213)"
 fi
 echo "This window will close in 5 seconds." >&8
 sleep 5
