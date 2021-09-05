@@ -318,6 +318,7 @@ pkill -SIGTERM flrig
 #	--buttons-layout=center --button="<b>Exit</b>":1 --button="<b>Restart ${1^^} &#x26; #Exit</b>":"$restoreApp_cmd" <&8
 
 [ -z $APP ] || restoreApp $APP $FREQ
+echo "RIG=$RIG"
 if [[ $RIG == "YAESU" ]]
 then 
 	echo -e "\nPowering off $RIG, standby...\n" >&8
