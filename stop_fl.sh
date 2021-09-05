@@ -323,7 +323,7 @@ then
 	if [[ $RIG == "YAESU" ]]
 	then 
 		echo -e "\nPowering off $RIG, standby...\n" >&8
-		yaesu_power.sh off >&8
+		yaesu_power.sh off >&8 && echo -e "Done\n" >&8 || echo -e "ERROR powering off $RIG!\n" >&8
 	fi
 else
 	restoreApp $APP $FREQ
