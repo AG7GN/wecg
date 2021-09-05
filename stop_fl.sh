@@ -123,6 +123,7 @@ function restoreApp () {
 					rm -f $HOME/.fldigi$SIDE/fldigi_def.rigcat
 				fi
 				echo >$PIPEDATA
+				;;
 			YAESU)
 				killall flrig >$PIPEDATA
 				echo -e "\nQSY to $2, standby...\n" >$PIPEDATA
