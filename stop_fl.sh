@@ -128,9 +128,7 @@ function restoreApp () {
 				killall flrig >$PIPEDATA
 				echo -e "\nQSY to $2, standby...\n" >$PIPEDATA
 				rigctl -m $RIG_MODEL -s $RIG_SPEED -r $RIG_PORT F $(printf "%d" $(bc <<< $2*1000000)) >$PIPEDATA
-				echo -e "\nPowering off $RIG, standby...\n" >$PIPEDATA
-				yaesu_power.sh off >$PIPEDATA
-				echo >&8
+				echo >$PIPEDATA
 				;;
 			*)
 				echo -e "Unknown rig" >$PIPEDATA
@@ -314,11 +312,18 @@ fi
 echo "FLdigi stopped" >&8
 pkill -SIGTERM flrig
 
+
 #yad --on-top --back=black --fore=yellow --selectable-labels --width=350 --height=550 \
 #	--text-info --text-align=center --title="$TITLE" --tail --center \
 #	--buttons-layout=center --button="<b>Exit</b>":1 --button="<b>Restart ${1^^} &#x26; #Exit</b>":"$restoreApp_cmd" <&8
 
 [ -z $APP ] || restoreApp $APP $FREQ
+if [[ $RIG == "YAESU" ]]
+then 
+	echo -e "\nPowering off $RIG, standby...\n" >$PIPEDATA
+	yaesu_power.sh off >$PIPEDATA
+fi
+
 echo "This window will close in 5 seconds." >&8
 sleep 5
 SafeExit
