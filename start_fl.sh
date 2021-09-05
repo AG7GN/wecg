@@ -172,7 +172,8 @@ do
 			exit 0
 			;;
 		r) 
-			RIG=${OPTARG^^:-KENWOOD}
+			RIG=${OPTARG:-KENWOOD}
+			RIG=${RIG^^}
 			;;
 		:) 
 			Die "${SCRIPT_NAME}: -$OPTARG: option requires an argument"
