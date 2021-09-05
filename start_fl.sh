@@ -278,9 +278,10 @@ then
 					if $(command -v yaesu_power.sh) &>/dev/null
 					then
 						echo -e "\nPowering on $RIG, standby...\n" >&8
-						yaesu_power.sh on >&8
+						yaesu_power.sh on >&8 && echo -e "Done\n" >&8 || echo -e "ERROR powering on $RIG!\n" >&8
 						echo -e "\nQSY to $2, standby...\n" >&8
 						rigctl -m $RIG_MODEL -s $RIG_SPEED -r $RIG_PORT F $(printf "%d" $(bc <<< $2*1000000)) >&8
+						echo -e "Done\n" >&8
 					fi
 					echo >&8
 					;;
