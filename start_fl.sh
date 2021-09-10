@@ -17,7 +17,7 @@
 #%
 #================================================================
 #- IMPLEMENTATION
-#-    version         ${SCRIPT_NAME} 1.1.0
+#-    version         ${SCRIPT_NAME} 1.1.1
 #-    author          Steve Magnuson, AG7GN
 #-    license         CC-BY-SA Creative Commons License
 #-    script_id       0
@@ -278,7 +278,7 @@ then
 					echo -e "\nPowering on $RIG, standby...\n" >&8
 					yaesu_power.sh on >&8 && echo -e "Done\n" >&8 || echo -e "ERROR powering on $RIG!\n" >&8
 					echo -e "\nQSY to $2, standby...\n" >&8
-					rigctl -m $RIG_MODEL -s $RIG_SPEED -r $RIG_PORT F $(printf "%d" $(bc <<< $2*1000000)) >&8
+					rigctl -m2 F $(printf "%d" $(bc <<< $2*1000000)) >&8
 					echo -e "Done\n" >&8
 					echo >&8
 					;;

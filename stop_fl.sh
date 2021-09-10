@@ -30,7 +30,7 @@
 #%                     	
 #================================================================
 #- IMPLEMENTATION
-#-    version         ${SCRIPT_NAME} 1.0.3
+#-    version         ${SCRIPT_NAME} 1.0.4
 #-    author          Steve Magnuson, AG7GN
 #-    license         CC-BY-SA Creative Commons License
 #-    script_id       0
@@ -311,23 +311,14 @@ then
 	pkill -SIGTERM fldigi
 fi
 echo "FLdigi stopped" >&8
-pkill -SIGTERM flrig
+# pkill -SIGTERM flrig
 
 
 #yad --on-top --back=black --fore=yellow --selectable-labels --width=350 --height=550 \
 #	--text-info --text-align=center --title="$TITLE" --tail --center \
 #	--buttons-layout=center --button="<b>Exit</b>":1 --button="<b>Restart ${1^^} &#x26; #Exit</b>":"$restoreApp_cmd" <&8
 
-if [[ -z $APP ]]
-then
-	if [[ $RIG == "YAESU" ]]
-	then 
-		echo -e "\nPowering off $RIG, standby...\n" >&8
-		yaesu_power.sh off >&8 && echo -e "Done\n" >&8 || echo -e "ERROR powering off $RIG!\n" >&8
-	fi
-else
-	restoreApp $APP $FREQ
-fi
+[[ -z $APP ]] && restoreApp $APP $FREQ
 
 echo "This window will close in 5 seconds." >&8
 sleep 5
