@@ -215,7 +215,8 @@ case ${1,,} in
 esac
 
 
-if ! pgrep fldigi >/dev/null && ! pgrep flrig >/dev/null
+#if ! pgrep fldigi >/dev/null && ! pgrep flrig >/dev/null
+if ! pgrep fldigi >/dev/null
 then
 	yad --on-top --back=black --fore=yellow --selectable-labels --width=400 --height=550 \
 		--text-info --text-align=center --title="$TITLE" \
