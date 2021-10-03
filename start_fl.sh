@@ -17,7 +17,7 @@
 #%
 #================================================================
 #- IMPLEMENTATION
-#-    version         ${SCRIPT_NAME} 1.1.1
+#-    version         ${SCRIPT_NAME} 1.1.2
 #-    author          Steve Magnuson, AG7GN
 #-    license         CC-BY-SA Creative Commons License
 #-    script_id       0
@@ -228,7 +228,7 @@ then
 		sudo systemctl stop ax25
 		echo "rmsgw stopped." >&8
 	fi
-	if pgrep -if ".*yad.*Log Viewer.*following.*" >/dev/null
+	if pgrep -if ".*yad.*Gateway Manager.*following.*" >/dev/null
 	then
 		echo "Stopping RMSGW Log Viewer..." >&8
 		pkill -SIGTERM -if ".*yad.*Log Viewer.*following.*"
