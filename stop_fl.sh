@@ -249,7 +249,7 @@ do
 			exit 0
 			;;
 		r) 
-			RIG=${RIG^^}
+			RIG=${OPTARG^^}
 			;;
 		:) 
 			Die "${SCRIPT_NAME}: -$OPTARG: option requires an argument"
