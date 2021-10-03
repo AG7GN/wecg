@@ -30,7 +30,7 @@
 #%                     	
 #================================================================
 #- IMPLEMENTATION
-#-    version         ${SCRIPT_NAME} 1.0.4
+#-    version         ${SCRIPT_NAME} 1.0.6
 #-    author          Steve Magnuson, AG7GN
 #-    license         CC-BY-SA Creative Commons License
 #-    script_id       0
@@ -249,7 +249,6 @@ do
 			exit 0
 			;;
 		r) 
-			RIG=${OPTARG:-KENWOOD}
 			RIG=${RIG^^}
 			;;
 		:) 
@@ -296,6 +295,7 @@ $DEBUG && set -x
 
 YAD_PIDs=()
 
+RIG=${RIG:-KENWOOD}
 
 yad --on-top --back=black --fore=yellow --selectable-labels --width=400 --height=550 \
 	--text-info --text-align=center --title="$TITLE" \
