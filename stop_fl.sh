@@ -30,7 +30,7 @@
 #%                     	
 #================================================================
 #- IMPLEMENTATION
-#-    version         ${SCRIPT_NAME} 1.0.6
+#-    version         ${SCRIPT_NAME} 1.0.7
 #-    author          Steve Magnuson, AG7GN
 #-    license         CC-BY-SA Creative Commons License
 #-    script_id       0
@@ -152,9 +152,12 @@ function restoreApp () {
 			fi
 			;;
 		aprs)
-			echo "Starting APRS..." >$PIPEDATA 
-			gtk-launch dw_aprs_gui.desktop >/dev/null 2>&1 &
-			echo "APRS started." >$PIPEDATA 
+			if ! pgrep -if ".*yad.*Direwolf APRS Manager.*" >/dev/null
+			then
+				echo "Starting APRS..." >$PIPEDATA 
+				gtk-launch dw_aprs_gui.desktop >/dev/null 2>&1 &
+				echo "APRS started." >$PIPEDATA 
+			fi
 			;;
 		*)
 			;;

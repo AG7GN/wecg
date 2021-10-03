@@ -17,7 +17,7 @@
 #%
 #================================================================
 #- IMPLEMENTATION
-#-    version         ${SCRIPT_NAME} 1.1.2
+#-    version         ${SCRIPT_NAME} 1.1.3
 #-    author          Steve Magnuson, AG7GN
 #-    license         CC-BY-SA Creative Commons License
 #-    script_id       0
@@ -234,10 +234,10 @@ then
 		pkill -SIGTERM -if ".*yad.*Gateway Manager.*following.*"
 		echo "RMSGW Log Viewer stopped." >&8
 	fi
-	if pgrep -if ".*yad.*Direwolf APRS Monitor and Configuration.*" >/dev/null
+	if pgrep -if ".*yad.*Direwolf APRS Manager.*" >/dev/null
 	then
 		echo "Stopping APRS..." >&8
-		pkill -SIGTERM -if ".*Direwolf APRS Monitor and Configuration.*"
+		pkill -SIGTERM -if ".*Direwolf APRS Manager.*"
 		echo "APRS stopped." >&8
 	fi
 	echo "Trimming FSQ logs..." >&8
