@@ -172,8 +172,7 @@ do
 			exit 0
 			;;
 		r) 
-			RIG=${OPTARG:-KENWOOD}
-			RIG=${RIG^^}
+			RIG=${OPTARG^^}
 			;;
 		:) 
 			Die "${SCRIPT_NAME}: -$OPTARG: option requires an argument"
@@ -214,6 +213,7 @@ case ${1,,} in
 		;;
 esac
 
+RIG=${RIG:-KENWOOD}
 
 #if ! pgrep fldigi >/dev/null && ! pgrep flrig >/dev/null
 if ! pgrep fldigi >/dev/null

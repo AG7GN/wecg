@@ -138,11 +138,11 @@ function restoreApp () {
 	
 	case ${1,,} in
 		rmsgw)
-			if ! pgrep -if ".*yad.*Log Viewer.*following.*" >/dev/null
+			if ! pgrep -if ".*yad.*Gateway Manager.*following.*" >/dev/null
 			then
-				echo "Starting RMSGW Log Viewer..." >$PIPEDATA 
-				gtk-launch rmsgw_monitor.desktop >/dev/null 2>&1 &
-				echo "RMSGW Log Viewer started." >$PIPEDATA 
+				echo "Starting RMSGW Gateway Manager..." >$PIPEDATA 
+				gtk-launch rmsgw_config_monitor.desktop >/dev/null 2>&1 &
+				echo "RMSGW Gateway Manager started." >$PIPEDATA 
 			fi
 			if ! systemctl | grep running | grep -q ax25.service
 			then # Start ax25 if it's not already running 
