@@ -103,7 +103,7 @@ function restoreApp () {
 	if [[ $2 =~ $RE ]]
 	then # Supplied frequency is a number
 		case $RIG in
-			KENDWOOD)
+			KENWOOD)
 				if ! pgrep -f 710.py >/dev/null 2>&1
 				then  # 710.py not running. Use 710.sh to change frequency
 					if $(command -v 710.sh) >/dev/null 2>&1
