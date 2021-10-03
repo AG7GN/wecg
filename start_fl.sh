@@ -231,7 +231,7 @@ then
 	if pgrep -if ".*yad.*Gateway Manager.*following.*" >/dev/null
 	then
 		echo "Stopping RMSGW Log Viewer..." >&8
-		pkill -SIGTERM -if ".*yad.*Log Viewer.*following.*"
+		pkill -SIGTERM -if ".*yad.*Gateway Manager.*following.*"
 		echo "RMSGW Log Viewer stopped." >&8
 	fi
 	if pgrep -if ".*yad.*Direwolf APRS Monitor and Configuration.*" >/dev/null
