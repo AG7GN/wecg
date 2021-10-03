@@ -318,7 +318,7 @@ echo "FLdigi stopped" >&8
 #	--text-info --text-align=center --title="$TITLE" --tail --center \
 #	--buttons-layout=center --button="<b>Exit</b>":1 --button="<b>Restart ${1^^} &#x26; #Exit</b>":"$restoreApp_cmd" <&8
 
-[[ -z $APP ]] && restoreApp $APP $FREQ
+[[ -z $APP ]] || restoreApp $APP $FREQ
 
 echo "This window will close in 5 seconds." >&8
 sleep 5
